@@ -159,11 +159,11 @@ namespace game_data
 
 
 
-        static void keeper(int goalkeeperDirection, string reslut)
+        static void keeper(int goalkeeperDirection, string result)
         {
             if (goalkeeperDirection < 33)
             {
-                if (reslut == "A")
+                if (result == "A")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -183,7 +183,7 @@ namespace game_data
                     Console.ReadKey();
                     Console.WriteLine();
                 }
-                if (reslut == "S")
+                if (result == "S")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -202,7 +202,7 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 왼쪽으로 뛰었습니다.");
                     Console.ReadKey();
                 }
-                if (reslut == "D")
+                if (result == "D")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -225,7 +225,7 @@ namespace game_data
             //===================================================================
             else if (goalkeeperDirection < 66)
             {
-                if (reslut == "A")
+                if (result == "A")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -244,7 +244,7 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 중간으로 뛰었습니다.");
                     Console.ReadKey();
                 }
-                if (reslut == "S")
+                if (result == "S")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -263,7 +263,7 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 중간으로 뛰었습니다.");
                     Console.ReadKey();
                 }
-                if (reslut == "D")
+                if (result == "D")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -285,7 +285,7 @@ namespace game_data
             }
             else
             {
-                if (reslut == "A")
+                if (result == "A")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -304,7 +304,7 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 오른쪽으로 뛰었습니다.");
                     Console.ReadKey();
                 }
-                if (reslut == "S")
+                if (result == "S")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -323,7 +323,7 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 오른쪽으로 뛰었습니다.");
                     Console.ReadKey();
                 }
-                if (reslut == "D")
+                if (result == "D")
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
