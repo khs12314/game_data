@@ -23,7 +23,7 @@ namespace game_data
         static readonly string SheetName = "Sheet1";
         private static ConsoleColor textColor;
         static int money = 0;
-        static int dobing = 0;
+        static int doping = 0;
 
         static void Main(string[] args)
         {
