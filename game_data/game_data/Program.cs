@@ -18,7 +18,7 @@ namespace game_data
     {
 
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
-        static readonly string ApplicationName = "Gane_Log";
+        static readonly string ApplicationName = "Game_Log";
         static readonly string SpreadsheetId = "1asHqhQdgcmzZG7k1hWGGoNEs4p668cqiBIwK6qF_W3Y";
         static readonly string SheetName = "Sheet1";
         private static ConsoleColor textColor;
@@ -88,7 +88,7 @@ namespace game_data
         {
             GoogleCredential credential;
             // 사용자 인증 정보 로드
-            using (var stream = new FileStream(@"C:\game_data\game_data\game_data\data\gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(@"gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleCredential.FromStream(stream)
                     .CreateScoped(Scopes);
