@@ -88,7 +88,7 @@ namespace game_data
         {
             GoogleCredential credential;
             // 사용자 인증 정보 로드
-            using (var stream = new FileStream("gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
+            using (var stream = new FileStream(@"C:\game_data\game_data\game_data\data\gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
             {
                 credential = GoogleCredential.FromStream(stream)
                     .CreateScoped(Scopes);
