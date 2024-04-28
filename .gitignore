@@ -21,8 +21,7 @@
 mono_crash.*
 
 # Build results
-[Dd]ebug/
-[Dd]ebugPublic/
+
 [Rr]elease/
 [Rr]eleases/
 x64/
@@ -31,7 +30,7 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
-[Bb]in/
+
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
@@ -206,9 +205,7 @@ PublishScripts/
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
-# NuGet v3's project.json files produces more ignorable files
-*.nuget.props
-*.nuget.targets
+
 
 # Microsoft Azure Build Output
 csx/
