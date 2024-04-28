@@ -102,7 +102,7 @@ namespace game_data
             // 데이터 작성
             ValueRange valueRange = new ValueRange();
             valueRange.Values = new List<IList<object>> {
-            new List<object> { "Time",DateTime.Now.ToString("G"), "","킥 or 도핑", input,"방향",result }
+            new List<object> { "Time",DateTime.Now.ToString("G"), "","킥 or 도핑", input,"방향",result}
         };
 
             SpreadsheetsResource.ValuesResource.AppendRequest request =
