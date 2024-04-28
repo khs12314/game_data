@@ -79,6 +79,11 @@ namespace game_data
                     {
                         Console.WriteLine("5번의 기회를 실패해 처음부터 골 카운트가 초기화 되었습니다.");
                         count = 0;
+                        totalSuccess = 0;
+                        for (int i = 0; i < successCount.Length; i++)
+                        {
+                            successCount[i] = null;
+                        }
                     }
 
                 }
@@ -105,11 +110,11 @@ namespace game_data
                          
                             count = 0; // Reset count to 0
                             totalSuccess = 0;
-                        for (int i = 0; i < successCount.Length; i++)
-                        {
-                            successCount[i] = null;
+                            for (int i = 0; i < successCount.Length; i++)
+                            {
+                                successCount[i] = null;
+                            }
                         }
-                    }
                     
                     
                 }
