@@ -21,8 +21,12 @@
 mono_crash.*
 
 # Build results
+<<<<<<< HEAD
 [Dd]ebug/
 [Dd]ebugPublic/
+=======
+
+>>>>>>> hsKim
 [Rr]elease/
 [Rr]eleases/
 x64/
@@ -31,7 +35,11 @@ x86/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
+<<<<<<< HEAD
 [Bb]in/
+=======
+
+>>>>>>> hsKim
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
@@ -206,7 +214,11 @@ PublishScripts/
 !**/[Pp]ackages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/[Pp]ackages/repositories.config
+<<<<<<< HEAD
 # NuGet v3's project.json files produces more ignorable files
+=======
+
+>>>>>>> hsKim
 
 # Microsoft Azure Build Output
 csx/

@@ -18,7 +18,11 @@ namespace game_data
     {
 
         static readonly string[] Scopes = { SheetsService.Scope.Spreadsheets };
+<<<<<<< HEAD
         static readonly string ApplicationName = "Game_Log";
+=======
+        static readonly string ApplicationName = "Gane_Log";
+>>>>>>> hsKim
         static readonly string SpreadsheetId = "1asHqhQdgcmzZG7k1hWGGoNEs4p668cqiBIwK6qF_W3Y";
         static readonly string SheetName = "Sheet1";
         private static ConsoleColor textColor;
@@ -88,7 +92,11 @@ namespace game_data
         {
             GoogleCredential credential;
             // 사용자 인증 정보 로드
+<<<<<<< HEAD
             using (var stream = new FileStream(@"gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
+=======
+            using (var stream = new FileStream("gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
+>>>>>>> hsKim
             {
                 credential = GoogleCredential.FromStream(stream)
                     .CreateScoped(Scopes);
@@ -102,7 +110,11 @@ namespace game_data
             // 데이터 작성
             ValueRange valueRange = new ValueRange();
             valueRange.Values = new List<IList<object>> {
+<<<<<<< HEAD
             new List<object> { "Time",DateTime.Now.ToString("G"), "","킥 or 도핑", input,"방향",result}
+=======
+            new List<object> { "Time",DateTime.Now.ToString("G"), "","킥 or 도핑", input,"방향",result }
+>>>>>>> hsKim
         };
 
             SpreadsheetsResource.ValuesResource.AppendRequest request =
@@ -159,11 +171,19 @@ namespace game_data
 
 
 
+<<<<<<< HEAD
         static void keeper(int goalkeeperDirection, string result)
         {
             if (goalkeeperDirection < 33)
             {
                 if (result == "A")
+=======
+        static void keeper(int goalkeeperDirection, string reslut)
+        {
+            if (goalkeeperDirection < 33)
+            {
+                if (reslut == "A")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -183,7 +203,11 @@ namespace game_data
                     Console.ReadKey();
                     Console.WriteLine();
                 }
+<<<<<<< HEAD
                 if (result == "S")
+=======
+                if (reslut == "S")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -202,7 +226,11 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 왼쪽으로 뛰었습니다.");
                     Console.ReadKey();
                 }
+<<<<<<< HEAD
                 if (result == "D")
+=======
+                if (reslut == "D")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -225,7 +253,11 @@ namespace game_data
             //===================================================================
             else if (goalkeeperDirection < 66)
             {
+<<<<<<< HEAD
                 if (result == "A")
+=======
+                if (reslut == "A")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -244,7 +276,11 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 중간으로 뛰었습니다.");
                     Console.ReadKey();
                 }
+<<<<<<< HEAD
                 if (result == "S")
+=======
+                if (reslut == "S")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -263,7 +299,11 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 중간으로 뛰었습니다.");
                     Console.ReadKey();
                 }
+<<<<<<< HEAD
                 if (result == "D")
+=======
+                if (reslut == "D")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -285,7 +325,11 @@ namespace game_data
             }
             else
             {
+<<<<<<< HEAD
                 if (result == "A")
+=======
+                if (reslut == "A")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -304,7 +348,11 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 오른쪽으로 뛰었습니다.");
                     Console.ReadKey();
                 }
+<<<<<<< HEAD
                 if (result == "S")
+=======
+                if (reslut == "S")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
@@ -323,7 +371,11 @@ namespace game_data
                     Console.WriteLine($"골키퍼가 오른쪽으로 뛰었습니다.");
                     Console.ReadKey();
                 }
+<<<<<<< HEAD
                 if (result == "D")
+=======
+                if (reslut == "D")
+>>>>>>> hsKim
                 {
                     Console.WriteLine("                             +---------------------------+    ");
                     Console.WriteLine("                             |\\                          |\\   ");
