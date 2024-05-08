@@ -26,10 +26,18 @@ namespace game_data
         static int doping = 0;
         static int dopingCost = 100;
         static double dopingSuccessRate = 0.5;
+        static int userCount = 0; // Initialize user count
 
         static void Main(string[] args)
         {
 
+            // Increment user count each time Main method is called
+            userCount++;
+
+            // Your existing game logic...
+
+            // Save user count data
+            SaveUserCount();
             textColor = Console.ForegroundColor;
             Random random = new Random();
             int totalSuccess = 0;
@@ -185,7 +193,7 @@ namespace game_data
             Console.WriteLine("  /                            _/ \\                                   /        ");
             Console.WriteLine(" /________________________________/___________________________________/         ");
             string Choice;
-            Console.WriteLine("페널티킥을 하려면 1번, 도핑을 하시려면 2번을 누르세요, 강화를 하려면 3번");
+            Console.WriteLine("페널티킥을 하려면 1번, 도핑을 하려면 2번, 강화를 하려면 3번");
             Choice = Console.ReadLine();
             return Choice;
         }
@@ -212,6 +220,7 @@ namespace game_data
             }
             return kickerDirection;
         }
+
 
 
 
@@ -415,7 +424,7 @@ namespace game_data
             if (enhancementRandomValue <= enhancementSuccessProbability)
             {
                 // Enhancement succeeded
-                Console.WriteLine("강화를 시도합니다. 킥 성공률이 10% 상승했습니다.");
+                Console.WriteLine("강화를 시도합니다. 강화에 성공하여 킥 성공률이 10% 상승했습니다.");
 
                 // Adjust the success rate accordingly
                 dopingSuccessRate += 0.1;
@@ -500,8 +509,23 @@ namespace game_data
             }
 
         }
+        static void SaveUserCount()
+        {
+            try
+            {
+                using (StreamWriter writer = new StreamWriter("user_count.txt"))
+                {
+                    writer.WriteLine(userCount);
+                }
+                Console.WriteLine("User count data saved.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving user count data: {ex.Message}");
+            }
 
+
+        }
 
     }
-
 }
