@@ -101,8 +101,9 @@ namespace game_data
                         dopingSuccess = random.NextDouble() <= dopingSuccessRate;
                         if (dopingSuccess) 
                         {
-                            Console.WriteLine("도핑 성공! 킥 성공률이 20% 상승합니다.");
-                            
+                            Console.WriteLine("도핑 성공! 킥 성공률이 10% 상승합니다.");
+
+                            goalkeeperDirection = random.Next(0, 110);
                         }
                         else 
                         {
@@ -405,11 +406,10 @@ namespace game_data
             if (dopingSuccess)
             {
                 
-                goalkeeperDirection += 10;
                 if (goalkeeperDirection >= 100)
                 {
-                   
-                    goalkeeperDirection -= 10;
+                    Random random = new Random();
+                    goalkeeperDirection = random.Next(0, 67);
                 }
             }
 
