@@ -403,17 +403,25 @@ namespace game_data
             double baseSuccessRate = 0.5;
             double enhancedSuccessRate = baseSuccessRate;
 
-            if (dopingSuccess)
+            if (dopingSuccess && goalkeeperDirection >= 100)
             {
+                Random random = new Random();
                 
-                if (goalkeeperDirection >= 100)
+                while (true)
                 {
-                    Random random = new Random();
-                    goalkeeperDirection = random.Next(0, 67);
+                        int newDirection = random.Next(0, 100);
+                        if ((result != "A" && newDirection < 33) ||
+                        (result != "S" && newDirection >= 33 && newDirection < 66) ||
+                        (result != "D" && newDirection >= 66) &&
+                           newDirection != goalkeeperDirection) // 겹치지 않는 경우
+                    {
+                        goalkeeperDirection = newDirection;
+                        break;
+                    }
                 }
             }
 
-           
+            // 골키퍼가 받아오는 난수의 범위와 플레이어가 입력한 방향 값의 범위를 비교하여 결과 반환
             bool isSuccess = (result != "A" && goalkeeperDirection < 33) ||
                              (result != "S" && goalkeeperDirection >= 33 && goalkeeperDirection < 66) ||
                              (result != "D" && goalkeeperDirection >= 66);
