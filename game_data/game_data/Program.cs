@@ -399,21 +399,28 @@ namespace game_data
         }
         static bool kickSuccess(string result, int goalkeeperDirection, bool dopingSuccess)
         {
-            double baseSuccessRate = 0.5; // 기본 성공 확률
-            double enhancedSuccessRate = baseSuccessRate; // 초기값은 기본 성공 확률로 설정
+            double baseSuccessRate = 0.5;
+            double enhancedSuccessRate = baseSuccessRate;
 
             if (dopingSuccess)
             {
-                // 도핑에 성공했을 때 성공 확률을 20% 더 높게 설정
-                enhancedSuccessRate += 0.2;
-
+                
+                goalkeeperDirection += 10;
+                if (goalkeeperDirection >= 100)
+                {
+                   
+                    goalkeeperDirection -= 10;
+                }
             }
 
+           
             bool isSuccess = (result != "A" && goalkeeperDirection < 33) ||
-                                  (result != "S" && goalkeeperDirection >= 33 && goalkeeperDirection < 66) ||
-                                  (result != "D" && goalkeeperDirection >= 66);
+                             (result != "S" && goalkeeperDirection >= 33 && goalkeeperDirection < 66) ||
+                             (result != "D" && goalkeeperDirection >= 66);
+
             return isSuccess;
         }
+
         static void SaveGameData()
         {
             try
