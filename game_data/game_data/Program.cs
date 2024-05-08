@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace game_data
 {
@@ -24,9 +25,11 @@ namespace game_data
         static readonly string SpreadsheetId = "1asHqhQdgcmzZG7k1hWGGoNEs4p668cqiBIwK6qF_W3Y";
         static readonly string SheetName = "Sheet1";
 
-       
+
+
+
         static int dopingCost = 100;
-        static double dopingSuccessRate = 0.5;
+
         static string IDinput()
         {
             int? UVcount = 0;
@@ -43,17 +46,20 @@ namespace game_data
 
         static void Main(string[] args)
         {
+
+
+
+            int dopingSuccessRate = 11;
             ConsoleColor textColor;
             string idn;
             idn = IDinput();
             string dataid;
-            DateTime intime = DateTime.Now;
-            DateTime tokentime;
+            int a = 0;
+            DateTime tokentime = DateTime.Now;
             textColor = Console.ForegroundColor;
             Random random = new Random();
             byte totalSuccess = 0;
             int money = 0;
-            int doping = 0;
             byte count = 0;
             string final;
             string[] successCount = new string[5];
@@ -62,31 +68,50 @@ namespace game_data
             int goalkeeperDirection;//키퍼의 랜덤값
             Guid? guid = null;
             bool dopingSuccess = false;
+            SetConsoleCtrlHandler((sig) =>
+            {
+                SaveGameData(idn, guid, totalSuccess, count, money, dopingSuccess, successCount);
+                Console.WriteLine("ConsoleCtrlHandler 실행됨");
+                HandleExit();
+                return true;
+            }, true);
+
+
+            string[] filecnt = new string[5];
+            void HandleExit()
+            {
+                a += (int)(DateTime.Now - tokentime).TotalSeconds;
+                playtime(idn, a);
+                // 종료
+                Environment.Exit(0);
+            }
             //나중에 함수로 수정할 예정
             try
             {
-                
-                    using (StreamReader reader = new StreamReader("game_data.txt"))
-                    {
-                        dataid = reader.ReadLine();
-                        guid = Guid.Parse(reader.ReadLine());
-                        totalSuccess = byte.Parse(reader.ReadLine());
-                        count = byte.Parse(reader.ReadLine());
-                        money = int.Parse(reader.ReadLine());
-                        doping = int.Parse(reader.ReadLine());
-                        for(int i = 0; i < 5; i++)
-                        {
-                            successCount[i] = reader.ReadLine();
-                            Console.WriteLine(successCount[i]);
-                        }
 
+                using (StreamReader reader = new StreamReader("game_data.txt"))
+                {
+                    dataid = reader.ReadLine();
+                    guid = Guid.Parse(reader.ReadLine());
+                    totalSuccess = byte.Parse(reader.ReadLine());
+                    count = byte.Parse(reader.ReadLine());
+                    money = int.Parse(reader.ReadLine());
+                    dopingSuccess = bool.Parse(reader.ReadLine());
+                    string line;
+                    System.Collections.Generic.List<string> lines = new System.Collections.Generic.List<string>();
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        lines.Add(line);
                     }
+                    successCount = lines.ToArray();
+                }
+
                 while (dataid != idn)
                 {
-                    
-                        Console.WriteLine("입력하신 학번과 저장된 학번이 다릅니다. 아이디를 재입력해주세요.");
-                        idn = Console.ReadLine();
-                    
+
+                    Console.WriteLine("입력하신 학번과 저장된 학번이 다릅니다. 아이디를 재입력해주세요.");
+                    idn = Console.ReadLine();
+
                 }
                 Console.WriteLine("-----게임 데이터를 불러왔습니다.-----");
             }
@@ -107,17 +132,22 @@ namespace game_data
             {
 
                 input = Player();
-                tokentime = DateTime.Now;
+
                 if (input == "1")
                 {
 
                     result = kick();
 
-
-                    goalkeeperDirection = random.Next(0, 100);
-
+                    if (dopingSuccess)
+                    {
+                        goalkeeperDirection = random.Next(0, 120);
+                    }
+                    else
+                    {
+                        goalkeeperDirection = random.Next(0, 100);
+                    }
                     keeper(goalkeeperDirection, result);
-                    Console.WriteLine(goalkeeperDirection);
+
                     if (kickSucces(result, goalkeeperDirection))
                     {
                         Console.ForegroundColor = ConsoleColor.Blue;
@@ -136,6 +166,7 @@ namespace game_data
                     }
                     Console.ForegroundColor = textColor;
                     count++;
+                    dopingSuccess = false;
                     Console.WriteLine($"성공횟수 ({successCount[0]})({successCount[1]})({successCount[2]})({successCount[3]})({successCount[4]})");
                     ggst(idn, input, result, goalkeeperDirection, totalSuccess, count, guid);
                     if ((count == 5) && (totalSuccess != 4))
@@ -152,28 +183,34 @@ namespace game_data
 
 
                 }
-                else if (input == "2")
+                else if ((input == "2") && (!dopingSuccess))
                 {
-                    Console.WriteLine($"도핑을 시도합니다. 도핑 비용은 {dopingCost}원입니다.");
+
 
                     if (money < dopingCost)
                     {
                         Console.WriteLine("돈이 부족하여 도핑을 시도할 수 없습니다.");
-                        continue;
+
                     }
                     money -= dopingCost; // 도핑 비용차감
-                    dopingSuccess = random.NextDouble() <= dopingSuccessRate;
+                    if (money > dopingCost)
+                    {
+                        Console.WriteLine($"도핑을 시도합니다. 도핑 비용은 {dopingCost}원입니다.");
+                        dopingSuccess = random.Next(0, 20) <= dopingSuccessRate;
+                    }
+
                     if (dopingSuccess)
                     {
-                        Console.WriteLine("도핑 성공! 킥 성공률이 20% 상승합니다.");
+                        Console.WriteLine("골을 넣을 확률이 상승합니다.");
 
                     }
                     else
                     {
-                        Console.WriteLine("도핑 적발로 퇴출되었습니다. 게임 오버!");
+                        Console.WriteLine("도핑 적발로 퇴출되었습니다! 소지금과 골 횟수가 전부 사라집니다.");
 
-                        count = 0; // Reset count to 0
+                        count = 0;
                         totalSuccess = 0;
+                        money = 0;
                         for (int i = 0; i < successCount.Length; i++)
                         {
                             successCount[i] = null;
@@ -182,19 +219,26 @@ namespace game_data
 
 
                 }
+                else if ((input == "2") && (dopingSuccess))
+                {
+                    Console.WriteLine("현재 도핑상태입니다.");
+                }
                 else
                 {
                     Console.WriteLine("잘못된 입력입니다. 1 또는 2를 입력하세요.");
                     continue;
                 }
-                SaveGameData(idn, guid, totalSuccess, count, money, doping,successCount);
+
+
 
 
 
             }
             Console.WriteLine($"게임 종료! 총 5번 중 {totalSuccess}번 성공하였습니다.");
-            Console.WriteLine($"게임을 초기화하려면 1번을 입력해주세요. 다른 키를 입력 시 프로그램이 종료됩니다.(초기화시 세이브데이터는 삭제됩니다.");
+            Console.WriteLine($"게임을 초기화하려면 1번을 입력해주세요. 다른 키를 입력 시 프로그램이 종료됩니다.(초기화시 기존 데이터는 삭제됩니다.)");
+
             final = Console.ReadLine();
+
             if (final == "1")
             {
                 try
@@ -211,10 +255,59 @@ namespace game_data
                     Console.WriteLine($"파일을 삭제하는 중 오류가 발생했습니다: {ex.Message}");
                 }
             }
-          
-           
+            else
+            {
+                HandleExit();
+            }
+
+
         }
         //여기부터 함수
+        // 종료 이벤트 핸들러
+
+        private delegate bool ConsoleCtrlHandlerDelegate(CtrlType sig);
+        private static bool MySetConsoleCtrlHandler(ConsoleCtrlHandlerDelegate handler, bool add)
+        {
+            return SetConsoleCtrlHandler(handler, add);
+        }
+
+        private enum CtrlType
+        {
+            CTRL_C_EVENT = 0,
+            CTRL_BREAK_EVENT = 1,
+            CTRL_CLOSE_EVENT = 2,
+            CTRL_LOGOFF_EVENT = 5,
+            CTRL_SHUTDOWN_EVENT = 6
+        }
+
+        [DllImport("Kernel32")]
+        private static extern bool SetConsoleCtrlHandler(ConsoleCtrlHandlerDelegate handler, bool add);
+
+        //플레이 타임 저장
+        static void playtime(string nid, int playtime)
+        {
+            GoogleCredential credential;
+            // 사용자 인증 정보 로드
+            using (var stream = new FileStream(@"gamelog-420512-010a0df65b4a.json", FileMode.Open, FileAccess.Read))
+            {
+                credential = GoogleCredential.FromStream(stream)
+                    .CreateScoped(Scopes);
+            }
+            var service = new SheetsService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = ApplicationName,
+            });
+
+            addplaytime(service, SpreadsheetId, SheetName, nid, playtime);
+
+
+
+
+
+
+
+        }
         //구글시트 사용자 입력 로그
         static void ggst(string id, string input, string result, int keeperrnd, byte total, byte cnt, Guid? guid)
         {
@@ -263,6 +356,47 @@ namespace game_data
             });
             CheckUserLoginToday(service, SpreadsheetId, SheetName, id, uvc, dayc);
         }
+        static void addplaytime(SheetsService service, string spreadsheetId, string sheetName, string id, int a)
+        {
+
+            // 스프레드시트 데이터 가져오기
+            IList<IList<object>> values = Getplaytime(service, spreadsheetId, sheetName);
+
+            // 가져온 데이터 출력
+            if (values != null && values.Count > 0)
+            {
+                foreach (var row in values)
+                {
+                    // 각 행의 첫 번째 열에 있는 값이 ID, 두 번째 열에 있는 값이 날짜로 가정
+                    string InSpId = row[0].ToString();
+                    int oldtime = int.Parse(row[1].ToString());
+
+
+
+
+                    // 현재 날짜와 비교하여 처리
+                    if (InSpId == id)
+                    {
+                        a += oldtime;
+
+                    }
+
+
+                }
+            }
+
+
+            ValueRange valueRange = new ValueRange();
+            valueRange.Values = new List<IList<object>> {
+            new List<object> {id,a}
+        };
+
+            SpreadsheetsResource.ValuesResource.AppendRequest request =
+                service.Spreadsheets.Values.Append(valueRange, SpreadsheetId, "playtime!A1:Z1");
+            request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
+            var response = request.Execute();
+        }
+
         static void CheckUserLoginToday(SheetsService service, string spreadsheetId, string sheetName, string id, int? UVcount, int? daycount)
         {
 
@@ -290,7 +424,7 @@ namespace game_data
                         firstcount = 1;
 
                     }
-                    if(date.Date != DateTime.Now.Date)
+                    if (date.Date != DateTime.Now.Date)
                     {
                         daycount = 0;
                         UVcount = 0;
@@ -319,7 +453,20 @@ namespace game_data
             request.ValueInputOption = SpreadsheetsResource.ValuesResource.AppendRequest.ValueInputOptionEnum.USERENTERED;
             var response = request.Execute();
         }
+        static IList<IList<object>> Getplaytime(SheetsService service, string spreadsheetId, string sheetName)
+        {
+            // 스프레드시트 데이터 범위 지정 (예: A1:B)
+            string range = $"playtime!A1:Z";
 
+            // 스프레드시트 데이터 가져오기
+            SpreadsheetsResource.ValuesResource.GetRequest request =
+                    service.Spreadsheets.Values.Get(spreadsheetId, range);
+
+            ValueRange response = request.Execute();
+            IList<IList<object>> values = response.Values;
+
+            return values;
+        }
         //-----------
         static IList<IList<object>> GetSpreadsheetData(SheetsService service, string spreadsheetId, string sheetName)
         {
@@ -508,6 +655,10 @@ namespace game_data
                     Console.ReadKey();
                 }
             }
+            else if (goalkeeperDirection > 100)
+            {
+                Console.WriteLine("강화된 슛으로 골키퍼가 막지 못했습니다.");
+            }
             else
             {
                 if (result == "A")
@@ -580,12 +731,12 @@ namespace game_data
         {
             bool isSuccess = (result != "A" && goalkeeperDirection < 33) ||
                                   (result != "S" && goalkeeperDirection >= 33 && goalkeeperDirection < 66) ||
-                                  (result != "D" && goalkeeperDirection >= 66);
+                                  (result != "D" && goalkeeperDirection >= 66) || (goalkeeperDirection > 100);
             return isSuccess;
         }
-        static void SaveGameData(string idn, Guid? guid, byte total, byte count, int money, int doping, string[] totalc)
+        static void SaveGameData(string idn, Guid? guid, byte total, byte count, int money, bool doping, string[] totalc)
         {
-            totalc = new string[5];
+
             try
             {
                 using (StreamWriter writer = new StreamWriter("game_data.txt"))
@@ -596,15 +747,16 @@ namespace game_data
                     writer.WriteLine(count);
                     writer.WriteLine(money);
                     writer.WriteLine(doping);
-                    foreach(string line in totalc)
+                    foreach (string line in totalc)
                     {
+                        Console.WriteLine(line);
                         writer.WriteLine(line);
-                       Console.WriteLine(line);
+
                     }
-                    
+
 
                 }
-                
+
                 Console.WriteLine("-----게임 데이터가 저장되었습니다.-----");
             }
             catch (Exception ex)
